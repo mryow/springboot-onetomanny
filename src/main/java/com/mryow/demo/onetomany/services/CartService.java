@@ -23,4 +23,11 @@ public class CartService {
         return cartRepository.findById(id);
     }
 
+    public Cart save(Cart cart){
+        return cartRepository.save(cart);
+    }
+
+   public void deleteById(Long id){
+        cartRepository.deleteById(id);
+   }
 }
