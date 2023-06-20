@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mryow.demo.onetomany.handlers.ResponseHandler;
 import com.mryow.demo.onetomany.models.Cart;
+import com.mryow.demo.onetomany.requests.CartRequest;
 import com.mryow.demo.onetomany.services.CartService;
 
 @RestController
@@ -38,7 +39,7 @@ public class CartController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@Validated @RequestBody Cart cartRequest) {
+    public ResponseEntity<Object> save(@Validated @RequestBody CartRequest cartRequest) {
         return ResponseHandler.created(cartService.save(cartRequest));
     }
 
@@ -53,7 +54,7 @@ public class CartController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(name = "id") Long id, @RequestBody Cart cartRequest){
+    public ResponseEntity<Object> update(@PathVariable(name = "id") Long id, @RequestBody CartRequest cartRequest){
         Optional<Cart> dbCart = cartService.findById(id);
         if(dbCart.isPresent()){
             return ResponseHandler.updated(cartService.save(cartRequest));

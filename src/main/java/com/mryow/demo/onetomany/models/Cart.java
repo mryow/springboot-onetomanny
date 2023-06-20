@@ -3,6 +3,9 @@ package com.mryow.demo.onetomany.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mryow.demo.onetomany.requests.CartRequest;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,8 +32,19 @@ public class Cart {
     @Column
     private String buyerName;
 
-    @OneToMany
-    List <CartItem>  cartiItems = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+    List <CartItem>  cartItems = new ArrayList<>();
 
+    public Cart(CartRequest cartRequest){
+       this.setBuyerName(cartRequest.getBuyerName());
+    }
+
+    // @Override
+    // public List<CartItem> getCartItems(){
+    //     if(cartItems==null){
+    //         cartItems = new ArrayList<>();
+    //     }
+    //     return cartItems;
+    // }
 
 }

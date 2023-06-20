@@ -1,5 +1,7 @@
 package com.mryow.demo.onetomany.models;
 
+import com.mryow.demo.onetomany.requests.CartItemRequest;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,9 @@ public class CartItem {
     private Long id;
 
     @Column
+    private String name;
+
+    @Column
     private Integer quantity;
 
     @Column
@@ -31,5 +36,11 @@ public class CartItem {
     
     @ManyToOne
     private Cart cart;
+
+    public CartItem(CartItemRequest cartItemRequest){
+        this.setName(cartItemRequest.getName());
+        this.setQuantity(cartItemRequest.getQuantity());
+        this.setPrice(cartItemRequest.getPrice());
+    }
     
 }
