@@ -30,8 +30,13 @@ public class CartItemService {
         return responses;
     }
 
+    public List<CartItem> findAllByCartId(Long id){
+        return cartItemRepository.findAllByCartId(id);
+    }
+
     public void deleteById(Long id) {
         cartItemRepository.deleteById(id);
     }
+
 
 }

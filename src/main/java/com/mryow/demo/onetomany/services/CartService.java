@@ -39,7 +39,6 @@ public class CartService {
     public CartAndCartItemResponse save(CartRequest cartRequest) {
 
         Cart cart = new Cart(cartRequest);
-        // cart.setCartItems(new ArrayList<>());
         if (cartRequest.getCartItems().size() > 0) {
             List<CartItem> cartItems = new ArrayList<>();
             for (CartItemRequest cartItemRequest : cartRequest.getCartItems()) {
@@ -57,7 +56,6 @@ public class CartService {
    
 
         return response;
-        // return cartRepository.save(cart);
     }
 
 

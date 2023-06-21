@@ -1,7 +1,11 @@
 package com.mryow.demo.onetomany.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,25 +21,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mryow.demo.onetomany.handlers.ResponseHandler;
 import com.mryow.demo.onetomany.models.Cart;
 import com.mryow.demo.onetomany.requests.CartRequest;
+import com.mryow.demo.onetomany.responses.CartResponse;
 import com.mryow.demo.onetomany.services.CartService;
 
 @RestController
 @RequestMapping("/cart")
 public class CartController {
 
+    Logger logger = LoggerFactory.getLogger(CartController.class);
+
     @Autowired
     CartService cartService;
 
     @GetMapping
     public ResponseEntity<Object> findAll() {
-        // Cart cart1 = new Cart();
-        // cart1.setBuyerName("Samsul");
-        // cartService.save(cart1);
-
-        // Cart cart2 = new Cart();
-        // cart2.setBuyerName("Hasan");
-        // cartService.save(cart2);
-        return ResponseHandler.ok(cartService.findAll());
+        logger.info("Find All");
+        List<CartResponse> cartResponses = new ArrayList<>();
+        cartService.findAll().forEach(cart->cartResponses.add(new CartResponse(cart)));
+        return ResponseHandler.ok(cartResponses);
     }
 
     @PostMapping
@@ -47,7 +50,7 @@ public class CartController {
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
         Optional<Cart> dbCart = cartService.findById(id);
         if (dbCart.isPresent()) {
-            return ResponseHandler.ok(dbCart.get());
+            return ResponseHandler.ok(new CartResponse(dbCart.get()));
         } else {
             return ResponseHandler.notFound();
         }
